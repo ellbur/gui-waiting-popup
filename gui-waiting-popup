@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+from PyQt5.QtWidgets import QApplication, QMainWindow, QProgressBar
+from PyQt5.QtCore import QCommandLineParser
+import sys
+
+app = QApplication(sys.argv)
+
+arg_parser = QCommandLineParser()
+arg_parser.setApplicationDescription('Launches a window for no purpose other than making GUI applications think something launched.')
+arg_parser.addHelpOption()
+arg_parser.addPositionalArgument('title', 'Window title')
+arg_parser.addPositionalArgument('desktop', 'Desktop file name')
+
+arg_parser.process(app)
+pos_args = arg_parser.positionalArguments()
+window_title = pos_args[0] if len(pos_args) > 0 else 'Progress'
+desktop = pos_args[1] if len(pos_args) > 1 else 'progress'
+
+app.setApplicationName(window_title)
+app.setApplicationDisplayName(window_title)
+app.setDesktopFileName(desktop)
+
+win = QMainWindow()
+win.setWindowTitle(window_title)
+bar = QProgressBar()
+win.setCentralWidget(bar)
+
+win.show()
+
+app.exec_()
+
